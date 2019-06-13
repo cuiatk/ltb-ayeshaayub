@@ -63,6 +63,8 @@ public class Customer {
 					each.getDaysRented() > 1) frequentRenterPoints ++;
 			return frequentRenterPoints;
 		}
+		
+		
 		private double frequentPointsCases(double thisAmount, Rental each) {
 			switch (each.getMovie().getPriceCode()) {
 			case Movie.REGULAR:

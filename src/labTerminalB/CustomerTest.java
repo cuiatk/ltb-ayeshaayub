@@ -1,5 +1,7 @@
 package labTerminalB;
 
+import static org.junit.Assert.assertEquals;
+
 import org.junit.Test;
 
 public class CustomerTest {
@@ -31,6 +33,14 @@ public class CustomerTest {
 	 * Provide at least two more test cases carefully chosen so that they satisfy our testing
 	 * strategy basics i.e. input partition etc
 	 */
+	public void NewReleaseRental() {
+		 me.addRental(new Rental(m2,1));
+		 assertEquals(me2.statement(),me2.statement());
+	}
 	
+	
+	public void SumRentals() {
+		me
+	}
 
 }
