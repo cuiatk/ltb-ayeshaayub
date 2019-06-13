@@ -9,12 +9,15 @@ public class Driver {
 	 * after completing each TODO task commit and push to remote repository with commit message
 	 * 		"TODO 'TASK NUMBER' Complete" e.g. in this case "TODO 1 COMPLETED"
 	 */
+	
 	public static void main(String[] args) {
+		String regex= "<[^>]*>"+"(Good|Bad|Ugly)"+"<[^>]*>";
 		String input = "The <b>Good</b>, the <i>Bad</i>, and the <strong>Ugly</strong>";
-		String regex = "TODO 1";
+		
 		String output = input.replaceAll(regex, "");
 		System.out.println(output);
-		
+		String stripped = input.replaceAll("<[^>]*>", "");
+		System.out.println(stripped);
 		
 		Movie m1 = new Movie("Spancer", 0);
 		Movie m2 = new Movie("Speed", 1);
