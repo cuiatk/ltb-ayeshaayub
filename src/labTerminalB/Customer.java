@@ -31,7 +31,7 @@ public class Customer {
 		 * Provide suitable specification for statement method 
 		 */
 		public String statement() {
-		double totalAmount = 0;
+		double totalAmountOwed = 0;
 		int frequentRenterPoints = 0;
 		Enumeration<Rental> rentals = _rentals.elements();
 		String result = "Rental Record for " + getName() + "\n";
@@ -39,6 +39,31 @@ public class Customer {
 			double thisAmount = 0;
 			Rental each = (Rental) rentals.nextElement();
 			//determine amounts for each line
+			thisAmount = frequentPointsCases(thisAmount, each);
+			// add frequent renter points
+			frequentRenterPoints ++;
+			// add bonus for a two day new release rental
+			frequentRenterPoints = calculateAmount(frequentRenterPoints, each);
+			//show figures for this rental
+			result += "\t" + each.getMovie().getTitle()+ "\t" +
+					String.valueOf(thisAmount) + "\n";
+			totalAmountOwed += thisAmount;
+		}
+		//add footer lines
+		result += "Amount owed is " + String.valueOf(totalAmountOwed) +
+				"\n";
+		result += "You earned " + String.valueOf(frequentRenterPoints)
+		+
+		" frequent renter points";
+		return result;
+	}
+		private int calculateAmount(int frequentRenterPoints, Rental each) {
+			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
+					&&
+					each.getDaysRented() > 1) frequentRenterPoints ++;
+			return frequentRenterPoints;
+		}
+		private double frequentPointsCases(double thisAmount, Rental each) {
 			switch (each.getMovie().getPriceCode()) {
 			case Movie.REGULAR:
 				thisAmount += 2;
@@ -54,23 +79,6 @@ public class Customer {
 					thisAmount += (each.getDaysRented() - 3) * 1.5;
 				break;
 			}
-			// add frequent renter points
-			frequentRenterPoints ++;
-			// add bonus for a two day new release rental
-			if ((each.getMovie().getPriceCode() == Movie.NEW_RELEASE)
-					&&
-					each.getDaysRented() > 1) frequentRenterPoints ++;
-			//show figures for this rental
-			result += "\t" + each.getMovie().getTitle()+ "\t" +
-					String.valueOf(thisAmount) + "\n";
-			totalAmount += thisAmount;
+			return thisAmount;
 		}
-		//add footer lines
-		result += "Amount owed is " + String.valueOf(totalAmount) +
-				"\n";
-		result += "You earned " + String.valueOf(frequentRenterPoints)
-		+
-		" frequent renter points";
-		return result;
-	}
 }
